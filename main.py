@@ -14,10 +14,12 @@ dconf write /org/gnome/desktop/background/picture-options "'{mode}'"
 
 
 class MultipleMonitorsWallpaperManager:
-    def __init__(self):
+    def __init__(self, wallpapers):
         self.width = 0
         self.height = 0
         self.positions = []
+        self.wallpapers = [os.path.abspath(wallpaper) for wallpaper in wallpapers]
+        self.run()
 
     def resize_and_pad(self, img, size):
         """将 img 等比缩放到 size，空白填充为 color"""
@@ -48,7 +50,6 @@ class MultipleMonitorsWallpaperManager:
                 print(f"图片 {img_path} 不存在，跳过。")
                 continue  # 跳过
             img = Image.open(img_path)
-            # img = img.resize((item['width'], item['height']), Image.LANCZOS)  # 需要tuple和插值方式
             img = self.resize_and_crop(img, (item['width'], item['height']))
             x = item['x']
             y = item['y']
@@ -59,4 +60,4 @@ class MultipleMonitorsWallpaperManager:
         set_wallpaper(os.path.join(os.getcwd(), 'result.png'), mode='spanned')
 
 
-MultipleMonitorsWallpaperManager().run()
+MultipleMonitorsWallpaperManager(wallpapers=['./images/0.jpg', './images/1.jpg', './images/2.jpg'])
