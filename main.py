@@ -28,6 +28,15 @@ class MultipleMonitorsWallpaperManager:
                 'width': m.width,
                 'height': m.height
             })
+        self.init_folder()
+        
+    def init_folder(self):
+        # 1. 创建文件夹
+        folder_path = os.path.join(os.getcwd(), 'images')
+        if not os.path.exists(folder_path):
+            os.makedirs(folder_path)
+            print(f"创建文件夹: {folder_path} 请把壁纸放在这个文件夹下")
+
 
     def resize_and_pad(self, img, size):
         """将 img 等比缩放到 size，空白填充为 color"""
@@ -67,6 +76,8 @@ class MultipleMonitorsWallpaperManager:
         random_images = random.sample(images, len(self.positions))
         # 3. 设置壁纸
         self.set_wallpaper(random_images)
+
+
 
 
 m = MultipleMonitorsWallpaperManager()
