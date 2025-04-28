@@ -45,7 +45,7 @@ class MultipleMonitorsWallpaperManager:
 
         # 3. 设置图片到x,y位置
         for i, item in enumerate(self.positions):
-            img_path = f'{i}.jpg'  # 或绝对路径
+            img_path = self.wallpapers[i]
             if not os.path.exists(img_path):
                 print(f"图片 {img_path} 不存在，跳过。")
                 continue  # 跳过
