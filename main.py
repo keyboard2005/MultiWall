@@ -3,6 +3,9 @@ from PIL import ImageOps
 from screeninfo import get_monitors
 import os
 import random
+import sys
+
+real_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
 
 def set_wallpaper(path, mode="spanned"):
@@ -47,9 +50,9 @@ class MultipleMonitorsWallpaperManager:
         return ImageOps.fit(img, size, method=Image.LANCZOS)
     
     def set_wallpaper(self, wallpapers):
+        wallpapers = [os.path.join(real_dir, img) for img in wallpapers]
         # 1. 创建指定大小的黑色图片
         black_img = Image.new('RGB', (self.width, self.height), color=(0, 0, 0))
-
         # 3. 设置图片到x,y位置
         for i, item in enumerate(self.positions):
             img_path = wallpapers[i]
@@ -67,8 +70,11 @@ class MultipleMonitorsWallpaperManager:
         set_wallpaper(os.path.join(os.getcwd(), 'result.png'), mode='spanned')
 
     def set_wallpaper_random(self, wallpaper_folder):
+        wallpaper_folder = os.path.join(real_dir, wallpaper_folder)
+        print(f"壁纸文件夹: {wallpaper_folder}")
         # 1. 获取文件夹下所有图片
         images = [os.path.join(wallpaper_folder, img) for img in os.listdir(wallpaper_folder) if img.endswith(('.png', '.jpg', '.jpeg'))]
+        
         # 2. 随机选择len(self.positions)张图片
         if len(images) < len(self.positions):
             print(f"图片数量不足，至少需要 {len(self.positions)} 张图片。")
@@ -76,8 +82,6 @@ class MultipleMonitorsWallpaperManager:
         random_images = random.sample(images, len(self.positions))
         # 3. 设置壁纸
         self.set_wallpaper(random_images)
-
-
 
 
 m = MultipleMonitorsWallpaperManager()
@@ -89,5 +93,6 @@ m = MultipleMonitorsWallpaperManager()
 #         './images/5.png'
 #     ]
 # )
+
 
 m.set_wallpaper_random(wallpaper_folder='./images')
