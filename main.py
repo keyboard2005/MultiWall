@@ -4,6 +4,7 @@ from screeninfo import get_monitors
 import os
 import random
 import sys
+import time
 
 real_dir = os.path.dirname(os.path.abspath(sys.argv[0]))
 
@@ -71,7 +72,6 @@ class MultipleMonitorsWallpaperManager:
 
     def set_wallpaper_random(self, wallpaper_folder):
         wallpaper_folder = os.path.join(real_dir, wallpaper_folder)
-        print(f"壁纸文件夹: {wallpaper_folder}")
         # 1. 获取文件夹下所有图片
         images = [os.path.join(wallpaper_folder, img) for img in os.listdir(wallpaper_folder) if img.endswith(('.png', '.jpg', '.jpeg'))]
         
@@ -82,6 +82,7 @@ class MultipleMonitorsWallpaperManager:
         random_images = random.sample(images, len(self.positions))
         # 3. 设置壁纸
         self.set_wallpaper(random_images)
+        print(f"{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())} 随机设置壁纸成功！")
 
 
 m = MultipleMonitorsWallpaperManager()
@@ -93,6 +94,5 @@ m = MultipleMonitorsWallpaperManager()
 #         './images/5.png'
 #     ]
 # )
-
 
 m.set_wallpaper_random(wallpaper_folder='./images')
