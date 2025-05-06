@@ -1,5 +1,4 @@
-from PIL import Image
-from PIL import ImageOps
+from PIL import Image, ImageOps
 from screeninfo import get_monitors
 import os
 import random
